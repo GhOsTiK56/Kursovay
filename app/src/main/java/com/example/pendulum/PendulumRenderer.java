@@ -41,7 +41,25 @@ public class PendulumRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         GLES20.glViewport(0, 0, width, height);
     }
+    public void startAnimation() {
+        pendulumModel.setRunning(true);
+    }
 
+    public void stopAnimation() {
+        pendulumModel.setRunning(false);
+    }
+
+    public void setPendulumLength(float length) {
+        pendulumModel.setLength(length);
+    }
+
+    public void setGravity(float gravity) {
+        pendulumModel.setGravity(gravity);
+    }
+
+    public void setInitialAngle(float angle) {
+        pendulumModel.setInitialAngle(angle);
+    }
     public void resetPendulum() {
         pendulumModel.reset();
     }
