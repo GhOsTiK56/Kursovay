@@ -14,11 +14,14 @@ public class PendulumGLSurfaceView extends GLSurfaceView {
     public PendulumGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setEGLContextClientVersion(2);
-        renderer = new PendulumRenderer(context);
+        renderer = new PendulumRenderer(context, null); // Пока без GraphView
         setRenderer(renderer);
         setRenderMode(RENDERMODE_CONTINUOUSLY);
     }
 
+    public void setGraphView(PendulumGraphView graphView) {
+        renderer.setGraphView(graphView);
+    }
     public void resetPendulum() {
         renderer.resetPendulum();
     }

@@ -8,17 +8,21 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class PendulumRenderer implements GLSurfaceView.Renderer {
     private final PendulumModel pendulumModel;
+    private  PendulumGraphView graphView;
     private final ShaderProgram shaderProgram;
     private final PendulumGeometry pendulumGeometry;
     private final BallGeometry ballGeometry;
-
-    public PendulumRenderer(Context context) {
-        pendulumModel = new PendulumModel();
+    private long startTime = 0;
+    public PendulumRenderer(Context context, PendulumGraphView graphView) {
+        this.pendulumModel = new PendulumModel();
+        this.graphView = graphView;
         shaderProgram = new ShaderProgram();
         pendulumGeometry = new PendulumGeometry();
         ballGeometry = new BallGeometry(0.05f, 20);
     }
-
+    public void setGraphView(PendulumGraphView graphView) {
+        this.graphView = graphView;
+    }
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -32,9 +36,21 @@ public class PendulumRenderer implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         pendulumModel.update();
 
+        // Получаем текущий угол маятника
+        float angle = pendulumModel.getAngle();
+
+        // Получаем текущее время
+        long currentTime = System.currentTimeMillis();
+
+        // Передаем угол и время в график
+        if (graphView != null) {
+            graphView.addPoint(angle, currentTime);
+        }
+
+        // Отрисовка маятника
         shaderProgram.use();
-        pendulumGeometry.draw(shaderProgram, pendulumModel.getAngle(), pendulumModel.getLength());
-        ballGeometry.draw(shaderProgram, pendulumModel.getAngle(), pendulumModel.getLength());
+        pendulumGeometry.draw(shaderProgram, angle, pendulumModel.getLength());
+        ballGeometry.draw(shaderProgram, angle, pendulumModel.getLength());
     }
 
     @Override

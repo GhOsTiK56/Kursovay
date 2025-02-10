@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private PendulumGLSurfaceView glSurfaceView;
+    private PendulumGraphView graphView;
     private SeekBar lengthSeekBar, gravitySeekBar, angleSeekBar;
     private TextView lengthValue, gravityValue, angleValue;
 
@@ -15,8 +16,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Инициализация GraphView
+        graphView = findViewById(R.id.graph_view);
+
         // Инициализация GLSurfaceView
         glSurfaceView = findViewById(R.id.gl_surface_view);
+        glSurfaceView.setGraphView(graphView); // Передаем GraphView в GLSurfaceView
 
         // Настройка элементов управления
         setupControls();
@@ -39,9 +44,15 @@ public class MainActivity extends AppCompatActivity {
         angleValue = findViewById(R.id.angle_value);
 
         // Настройка обработчиков для кнопок
-        startButton.setOnClickListener(v -> glSurfaceView.startAnimation());
+        startButton.setOnClickListener(v -> {
+            glSurfaceView.startAnimation();
+            graphView.clearGraph(); // Очищаем график при старте
+        });
         stopButton.setOnClickListener(v -> glSurfaceView.stopAnimation());
-        resetButton.setOnClickListener(v -> glSurfaceView.resetPendulum());
+        resetButton.setOnClickListener(v -> {
+            glSurfaceView.resetPendulum();
+            graphView.clearGraph(); // Очищаем график при сбросе
+        });
 
         // Настройка ползунков
         setupSeekBar(lengthSeekBar, lengthValue, 10, 200, 100, value -> {
