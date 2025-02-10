@@ -21,8 +21,8 @@ public class BallGeometry {
         vertexBuffer = bb.asFloatBuffer();
     }
 
-    public void draw(ShaderProgram shader, float angle) {
-        updateVertices(angle);
+    public void draw(ShaderProgram shader, float angle, float length) {
+        updateVertices(angle, length);
 
         GLES20.glEnableVertexAttribArray(shader.getPositionHandle());
         GLES20.glVertexAttribPointer(
@@ -38,9 +38,9 @@ public class BallGeometry {
         GLES20.glDisableVertexAttribArray(shader.getPositionHandle());
     }
 
-    private void updateVertices(float angle) {
-        float cx = (float) Math.sin(angle) * 0.5f;
-        float cy = -(float) Math.cos(angle) * 0.5f;
+    private void updateVertices(float angle, float length) {
+        float cx = (float) Math.sin(angle) * length;  // Учитываем длину нити
+        float cy = -(float) Math.cos(angle) * length; // Учитываем длину нити
 
         float[] vertices = new float[(circlePoints + 2) * 3];
         vertices[0] = cx;

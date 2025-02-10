@@ -15,39 +15,50 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Инициализация GLSurfaceView
         glSurfaceView = findViewById(R.id.gl_surface_view);
+
+        // Настройка элементов управления
         setupControls();
     }
 
     private void setupControls() {
+        // Инициализация кнопок
         Button startButton = findViewById(R.id.start_button);
         Button stopButton = findViewById(R.id.stop_button);
         Button resetButton = findViewById(R.id.reset_button);
 
+        // Инициализация ползунков
         lengthSeekBar = findViewById(R.id.length_seekbar);
         gravitySeekBar = findViewById(R.id.gravity_seekbar);
         angleSeekBar = findViewById(R.id.angle_seekbar);
 
+        // Инициализация текстовых полей для отображения значений
         lengthValue = findViewById(R.id.length_value);
         gravityValue = findViewById(R.id.gravity_value);
         angleValue = findViewById(R.id.angle_value);
 
+        // Настройка обработчиков для кнопок
         startButton.setOnClickListener(v -> glSurfaceView.startAnimation());
         stopButton.setOnClickListener(v -> glSurfaceView.stopAnimation());
         resetButton.setOnClickListener(v -> glSurfaceView.resetPendulum());
 
+        // Настройка ползунков
         setupSeekBar(lengthSeekBar, lengthValue, 10, 200, 100, value -> {
-            glSurfaceView.setPendulumLength(value / 100f);
-            lengthValue.setText(String.format("Длина: %.2f м", value / 100f));
+            float length = value / 100f;  // Преобразуем в метры (0.1 - 2.0 м)
+            glSurfaceView.setPendulumLength(length);
+            lengthValue.setText(String.format("Длина: %.2f м", length));
         });
 
         setupSeekBar(gravitySeekBar, gravityValue, 10, 300, 98, value -> {
-            glSurfaceView.setGravity(value / 10f);
-            gravityValue.setText(String.format("G: %.1f м/с²", value / 10f));
+            float gravity = value / 10f;  // Преобразуем в м/с² (1.0 - 30.0 м/с²)
+            glSurfaceView.setGravity(gravity);
+            gravityValue.setText(String.format("G: %.1f м/с²", gravity));
         });
 
         setupSeekBar(angleSeekBar, angleValue, 0, 90, 45, value -> {
-            glSurfaceView.setInitialAngle((float) Math.toRadians(value));
+            float angle = (float) Math.toRadians(value);  // Преобразуем в радианы
+            glSurfaceView.setInitialAngle(angle);
             angleValue.setText(String.format("Угол: %d°", value));
         });
     }
@@ -62,8 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 callback.onValueChanged(value);
             }
 
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
         callback.onValueChanged(initial);
     }

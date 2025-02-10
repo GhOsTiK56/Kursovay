@@ -33,8 +33,8 @@ public class PendulumRenderer implements GLSurfaceView.Renderer {
         pendulumModel.update();
 
         shaderProgram.use();
-        pendulumGeometry.draw(shaderProgram, pendulumModel.getAngle());
-        ballGeometry.draw(shaderProgram, pendulumModel.getAngle());
+        pendulumGeometry.draw(shaderProgram, pendulumModel.getAngle(), pendulumModel.getLength());
+        ballGeometry.draw(shaderProgram, pendulumModel.getAngle(), pendulumModel.getLength());
     }
 
     @Override

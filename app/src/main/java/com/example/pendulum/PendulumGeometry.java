@@ -15,8 +15,8 @@ public class PendulumGeometry {
         vertexBuffer = bb.asFloatBuffer();
     }
 
-    public void draw(ShaderProgram shader, float angle) {
-        updateVertices(angle);
+    public void draw(ShaderProgram shader, float angle, float length) {
+        updateVertices(angle, length);
 
         GLES20.glEnableVertexAttribArray(shader.getPositionHandle());
         GLES20.glVertexAttribPointer(
@@ -32,13 +32,13 @@ public class PendulumGeometry {
         GLES20.glDisableVertexAttribArray(shader.getPositionHandle());
     }
 
-    private void updateVertices(float angle) {
-        float x = (float) Math.sin(angle) * 0.5f;
-        float y = -(float) Math.cos(angle) * 0.5f;
+    private void updateVertices(float angle, float length) {
+        float x = (float) Math.sin(angle) * length;  // Учитываем длину нити
+        float y = -(float) Math.cos(angle) * length; // Учитываем длину нити
 
         float[] vertices = {
-                0.0f, 0.0f, 0.0f,
-                x, y, 0.0f
+                0.0f, 0.0f, 0.0f,  // Точка крепления нити
+                x, y, 0.0f          // Конец нити (шар)
         };
 
         vertexBuffer.clear();

@@ -14,7 +14,9 @@ public class PendulumModel {
             rungeKuttaStep();
         }
     }
-
+    public float getLength() {
+        return length;
+    }
     public void setRunning(boolean running) {
         isRunning = running;
     }
