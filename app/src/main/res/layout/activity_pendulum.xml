@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <!-- Верхняя часть: GLSurfaceView для маятника -->
+  <com.example.pendulum.PendulumGLSurfaceView
+      android:id="@+id/gl_surface_view"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/graph_view"
+      app:layout_constraintHeight_percent="0.4" />
+
+  <!-- Центральная часть: График движения маятника -->
+  <com.example.pendulum.PendulumGraphView
+      android:id="@+id/graph_view"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:background="#FFFFFF"
+      app:layout_constraintTop_toBottomOf="@id/gl_surface_view"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/controls_layout"
+      app:layout_constraintHeight_percent="0.3" />
+
+  <!-- Нижняя часть: Кнопки и слайдеры -->
+  <LinearLayout
+      android:id="@+id/controls_layout"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      android:padding="8dp"
+      android:background="#CCFFFFFF"
+      app:layout_constraintTop_toBottomOf="@id/graph_view"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintHeight_percent="0.3">
+
+    <!-- Кнопки управления -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+      <Button
+          android:id="@+id/start_button"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Пуск"/>
+
+      <Button
+          android:id="@+id/stop_button"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Стоп"/>
+
+      <Button
+          android:id="@+id/reset_button"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Сброс"/>
+    </LinearLayout>
+
+    <!-- Ползунки и текстовые поля -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <!-- Длина нити -->
+      <TextView
+          android:id="@+id/length_value"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Длина: 1.00 м"/>
+
+      <SeekBar
+          android:id="@+id/length_seekbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+
+      <!-- Гравитация -->
+      <TextView
+          android:id="@+id/gravity_value"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="G: 9.8 м/с²"/>
+
+      <SeekBar
+          android:id="@+id/gravity_seekbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+
+      <!-- Начальный угол -->
+      <TextView
+          android:id="@+id/angle_value"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Угол: 45°"/>
+
+      <SeekBar
+          android:id="@+id/angle_seekbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+    </LinearLayout>
+  </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
